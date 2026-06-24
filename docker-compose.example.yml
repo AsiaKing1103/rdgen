@@ -1,0 +1,27 @@
+services:
+  rdgen:
+    image: bryangerlach/rdgen:latest
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: "your-django-secret-key"
+      GHUSER: "your-github-username"
+      GHBEARER: "github_pat_xxxx"
+      GENURL: "http://YOUR_IP:30678"
+      ZIP_PASSWORD: "your-zip-password"
+      PROTOCOL: "http"
+      REPONAME: "rdgen"
+      DEBUG: "False"
+      CSRF_TRUSTED_ORIGINS: "http://YOUR_IP:30678"
+    ports:
+      - "8099:8000"
+    volumes:
+      - ./exe:/opt/rdgen/exe
+      - ./png:/opt/rdgen/png
+      - ./temp_zips:/opt/rdgen/temp_zips
+      - ./settings.py:/opt/rdgen/rdgen/settings.py
+      - ./views.py:/opt/rdgen/rdgenerator/views.py
+      - ./generator.html:/opt/rdgen/rdgenerator/templates/generator.html
+      - ./waiting.html:/opt/rdgen/rdgenerator/templates/waiting.html
+      - ./generated.html:/opt/rdgen/rdgenerator/templates/generated.html
+      - ./failure.html:/opt/rdgen/rdgenerator/templates/failure.html
+      - ./maintenance.html:/opt/rdgen/rdgenerator/templates/maintenance.html
